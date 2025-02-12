@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Sidebar } from "@/components/sidebar"
 import { Mail } from "lucide-react"
-import Image from "next/image"
 import { Timeline } from "@/components/ui/timeline"
+import { Spotlight } from "@/components/ui/spotlight-new"
 
 export default function Home() {
   return (
     <div className="flex min-h-screen">
+      <Spotlight />
       <Sidebar />
       <main className="flex-1 ml-64">
         <div className="max-w-4xl mx-auto px-8 py-12">
