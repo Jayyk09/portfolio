@@ -16,6 +16,8 @@ import {
   Users,
   Twitter,
 } from "lucide-react"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 
 const navigation = [
   { name: "Explore", href: "#explore", icon: Compass, number: "1" },
@@ -46,9 +48,12 @@ export function Sidebar() {
     <div className="fixed left-0 top-0 w-64 h-screen border-r border-zinc-800 bg-zinc-950/50 backdrop-blur-xl">
       <div className="flex flex-col h-full px-4 py-8">
         <div className="flex items-center gap-3 px-2">
-          <div className="w-10 h-10 rounded-full bg-zinc-800" />
+          <Avatar>
+            <AvatarImage src="/avatar.png" alt="Jay Roy" />
+            <AvatarFallback className="bg-zinc-800">JR</AvatarFallback>
+          </Avatar>
           <div>
-            <h2 className="font-semibold">Your Name</h2>
+            <h2 className="font-semibold">Jay Roy</h2>
             <p className="text-sm text-zinc-400">Software Engineer</p>
           </div>
         </div>
@@ -134,4 +139,3 @@ export function Sidebar() {
     </div>
   )
 }
-

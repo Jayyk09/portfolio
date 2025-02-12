@@ -8,12 +8,12 @@ export default function Home() {
   return (
     <div className="flex min-h-screen">
       <Spotlight />
-      <Sidebar />
-      <main className="flex-1 ml-64">
+      <Sidebar /> 
+      <main className="flex-1 ml-64 ">
         <div className="max-w-4xl mx-auto px-8 py-12">
           <section className="space-y-6">
             <h1 className="text-5xl font-bold tracking-tight">
-              Hey, I&apos;m Jay Roy,
+              Hey, I&apos;m Jay Roy
               <br />
             </h1>
             <p className="text-lg text-zinc-400 max-w-2xl">
