@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Sidebar } from "@/components/sidebar"
 import { Mail } from "lucide-react"
 import Image from "next/image"
+import { Timeline } from "@/components/ui/timeline"
 
 export default function Home() {
   return (
@@ -27,53 +28,43 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="mt-24">
-            <h2 className="text-2xl font-bold mb-8">New Drops</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="group relative">
-                <div className="overflow-hidden rounded-lg border border-zinc-800">
-                  <Image
-                    src="/placeholder.svg"
-                    alt="Project screenshot"
-                    width={600}
-                    height={400}
-                    className="object-cover aspect-video group-hover:scale-105 transition-transform"
-                  />
-                </div>
-                <div className="mt-4">
-                  <h3 className="text-xl font-semibold">System Prompt Generator</h3>
-                  <p className="text-zinc-400 mt-1">
-                    A modern web application that helps users create effective AI system prompts with intelligent
-                    suggestions.
-                  </p>
-                  <div className="mt-2">
-                    <span className="inline-block px-2 py-1 text-xs text-zinc-400 bg-zinc-800 rounded">AI</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="group relative">
-                <div className="overflow-hidden rounded-lg border border-zinc-800">
-                  <Image
-                    src="/placeholder.svg"
-                    alt="Project screenshot"
-                    width={600}
-                    height={400}
-                    className="object-cover aspect-video group-hover:scale-105 transition-transform"
-                  />
-                </div>
-                <div className="mt-4">
-                  <h3 className="text-xl font-semibold">LumeAI</h3>
-                  <p className="text-zinc-400 mt-1">
-                    LumeAI is a cutting-edge AI-powered chat application featuring advanced conversation capabilities.
-                  </p>
-                  <div className="mt-2">
-                    <span className="inline-block px-2 py-1 text-xs text-zinc-400 bg-zinc-800 rounded">AI Chat</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+            <Timeline
+              data={[
+                {
+                  title: "System Prompt Generator",
+                  content: (
+                    <div className="group relative">
+                      <div className="mt-4">
+                        <h3 className="text-xl font-semibold">System Prompt Generator</h3>
+                        <p className="text-zinc-400 mt-1">
+                          A modern web application that helps users create effective AI system prompts with intelligent
+                          suggestions.
+                        </p>
+                        <div className="mt-2">
+                          <span className="inline-block px-2 py-1 text-xs text-zinc-400 bg-zinc-800 rounded">AI</span>
+                        </div>
+                      </div>
+                    </div>
+                  ),
+                },
+                {
+                  title: "LumeAI",
+                  content: (
+                    <div className="group relative">
+                      <div className="mt-4">
+                        <h3 className="text-xl font-semibold">LumeAI</h3>
+                        <p className="text-zinc-400 mt-1">
+                          LumeAI is a cutting-edge AI-powered chat application featuring advanced conversation capabilities.
+                        </p>
+                        <div className="mt-2">
+                          <span className="inline-block px-2 py-1 text-xs text-zinc-400 bg-zinc-800 rounded">AI Chat</span>
+                        </div>
+                      </div>
+                    </div>
+                  ),
+                }
+              ]}
+            />
         </div>
       </main>
     </div>
