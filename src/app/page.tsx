@@ -17,8 +17,7 @@ export default function Home() {
               <br />
             </h1>
             <p className="text-lg text-zinc-400 max-w-2xl">
-              I&apos;m a developer who enjoys building web applications and exploring new technologies — basically, I
-              spend most of my time in front of a screen.
+              I&apos;m a developer 
             </p>
             <div className="flex gap-4">
               <Button variant="secondary">About</Button>
