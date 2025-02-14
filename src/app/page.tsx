@@ -31,7 +31,7 @@ export default function Home() {
             <Timeline
               data={[
                 {
-                  title: "System Prompt Generator",
+                  title: "2025",
                   content: (
                     <div className="group relative">
                       <div className="mt-4">
@@ -48,7 +48,7 @@ export default function Home() {
                   ),
                 },
                 {
-                  title: "LumeAI",
+                  title: "2024",
                   content: (
                     <div className="group relative">
                       <div className="mt-4">

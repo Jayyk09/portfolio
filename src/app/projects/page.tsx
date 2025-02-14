@@ -1,12 +1,13 @@
 "use client";
 
 import { Spotlight } from "@/components/ui/spotlight-new";
-
+import { Sidebar } from "@/components/sidebar";
 export default function Projects() {
   return (
     <div className="flex min-h-screen">
       <Spotlight />
       <main className="flex-1">
+        <Sidebar />
         <div className="max-w-4xl mx-auto px-8 py-12">
           <section className="space-y-6">
             <h1 className="text-5xl font-bold tracking-tight">Projects</h1>

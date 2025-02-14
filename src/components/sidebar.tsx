@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   Compass,
@@ -20,8 +20,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 
 const navigation = [
-  { name: "Explore", href: "#explore", icon: Compass, number: "1" },
-  { name: "Projects", href: "#projects", icon: FolderGit2, number: "2" },
+  { name: "Explore", href: "/", icon: Compass, number: "1" },
+  { name: "Projects", href: "/projects", icon: FolderGit2, number: "2" },
   { name: "About", href: "#about", icon: User, number: "3" },
 ]
 
@@ -43,6 +43,7 @@ const connect = [
 
 export function Sidebar() {
   const pathname = usePathname()
+  const router = useRouter()
 
   return (
     <div className="fixed left-0 top-0 w-64 h-screen border-r border-zinc-800 bg-zinc-950/50 backdrop-blur-xl">
@@ -68,6 +69,12 @@ export function Sidebar() {
                   "flex items-center gap-3 px-2 py-1 text-zinc-400 hover:text-zinc-100 rounded-md group relative",
                   pathname === item.href && "text-zinc-100",
                 )}
+                onClick={(e) => {
+                  if (item.href.startsWith('/')) {
+                    e.preventDefault()
+                    router.push(item.href)
+                  }
+                }}
               >
                 <item.icon className="w-5 h-5" />
                 <span>{item.name}</span>
