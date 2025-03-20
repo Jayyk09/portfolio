@@ -18,7 +18,7 @@ import {
 } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-
+import { Pet } from "@/components/ui/pet"
 const navigation = [
   { name: "Explore", href: "/", icon: Compass, number: "1" },
   { name: "Projects", href: "/projects", icon: FolderGit2, number: "2" },
@@ -134,6 +134,8 @@ export function Sidebar() {
             </div>
           </div> */}
         </nav>
+
+        <Pet />
 
         <div className="relative mt-4">
           <div className="flex items-center gap-2 px-3 py-2 text-sm text-zinc-400 bg-zinc-900/50 rounded-lg">
