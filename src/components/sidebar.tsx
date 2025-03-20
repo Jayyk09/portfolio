@@ -17,8 +17,7 @@ import {
   Twitter,
 } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Pet } from "@/components/ui/pet"
+import { Pet } from "@/components/pet/pet"
 const navigation = [
   { name: "Explore", href: "/", icon: Compass, number: "1" },
   { name: "Projects", href: "/projects", icon: FolderGit2, number: "2" },
