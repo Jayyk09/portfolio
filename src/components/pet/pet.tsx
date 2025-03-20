@@ -1,7 +1,9 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect, useRef } from "react"
-import { ChevronDown, Plus, Circle, Trash2 } from "lucide-react"
+import { Plus, Circle, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 
@@ -25,11 +27,11 @@ interface PetState {
   action: PandaAction
   lastAction: PandaAction
   actionDuration: number
+  showHeart: boolean
 }
 
-export function Pet({ className }: { className?: string }) {
+export function PandaPet({ className }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isOpen, setIsOpen] = useState(true)
   const [pet, setPet] = useState<PetState>({
     x: 50,
     y: 10,
@@ -37,24 +39,24 @@ export function Pet({ className }: { className?: string }) {
     action: "idle",
     lastAction: "idle",
     actionDuration: 0,
+    showHeart: false,
   })
 
   // Handle pet movement and behavior
   useEffect(() => {
-    if (!isOpen) return
-
     const interval = setInterval(() => {
       setPet((prev) => {
         // Increment action duration
         const actionDuration = prev.actionDuration + 1
 
-        // Special actions have limited duration
-        if (["swipe", "withBall", "lying"].includes(prev.action) && actionDuration > 5) {
+        // Special actions have limited duration - increased from 5 to 15
+        if (["swipe", "withBall", "lying"].includes(prev.action) && actionDuration > 15) {
           return {
             ...prev,
             action: prev.lastAction === "idle" ? "idle" : "walking",
             lastAction: prev.action,
             actionDuration: 0,
+            showHeart: false,
           }
         }
 
@@ -63,20 +65,25 @@ export function Pet({ className }: { className?: string }) {
 
         // If currently in a basic state (idle, walking, running), consider changing
         if (["idle", "walking", "walkingFast", "running"].includes(prev.action)) {
-          // 5% chance to do a special action
-          if (randomValue < 0.05) {
-            const specialActions: PandaAction[] = ["swipe", "withBall", "lying"]
+          // Reduced chance to do a special action from 5% to 2%
+          if (randomValue < 0.02) {
+            const specialActions: PandaAction[] = ["swipe", "lying"]
             const newAction = specialActions[Math.floor(Math.random() * specialActions.length)]
+
+            // 30% chance to show heart with special action
+            const showHeart = Math.random() < 0.3
+
             return {
               ...prev,
               action: newAction,
               lastAction: prev.action,
               actionDuration: 0,
+              showHeart,
             }
           }
 
-          // 10% chance to change basic action
-          if (randomValue < 0.15) {
+          // Reduced chance to change basic action from 15% to 5%
+          if (randomValue < 0.05) {
             const basicActions: PandaAction[] = ["idle", "walking", "walkingFast", "running"]
             let newAction: PandaAction
 
@@ -88,88 +95,86 @@ export function Pet({ className }: { className?: string }) {
               ...prev,
               action: newAction,
               actionDuration: 0,
+              showHeart: false,
             }
-          }
-
-          // 8% chance to change direction when moving
-          if (["walking", "walkingFast", "running"].includes(prev.action) && randomValue < 0.23) {
-            const direction = prev.direction === "left" ? "right" : "left"
-            return { ...prev, direction, actionDuration }
           }
         }
 
         // Calculate new position based on action
         let x = prev.x
+        let direction = prev.direction
+
         const speed =
           prev.action === "running" ? 6 : prev.action === "walkingFast" ? 4 : prev.action === "walking" ? 2 : 0
 
         if (speed > 0) {
-          x += prev.direction === "right" ? speed : -speed
+          x += direction === "right" ? speed : -speed
 
-          // Boundary check
+          // Boundary check - ONLY change direction at the edges
           const container = containerRef.current
           if (container) {
             const maxX = container.clientWidth - 40
             if (x < 0) {
               x = 0
-              return {
-                ...prev,
-                x,
-                direction: "right",
-                actionDuration,
-              }
+              direction = "right"
             }
             if (x > maxX) {
               x = maxX
-              return {
-                ...prev,
-                x,
-                direction: "left",
-                actionDuration,
-              }
+              direction = "left"
             }
           }
         }
 
-        return { ...prev, x, actionDuration }
+        return {
+          ...prev,
+          x,
+          direction,
+          actionDuration,
+          // Increased heart display duration from 3 to 8
+          showHeart: prev.showHeart && actionDuration < 8,
+        }
       })
     }, 200)
 
     return () => clearInterval(interval)
-  }, [isOpen])
+  }, [])
 
   // Handle pet interaction
   const handlePetClick = () => {
     setPet((prev) => {
-      // Cycle through some fun interactions when clicked
-      const clickActions: PandaAction[] = ["swipe", "withBall", "lying"]
-      const currentIndex = clickActions.indexOf(prev.action as PandaAction)
-      const nextIndex = (currentIndex + 1) % clickActions.length
-
+      // Show heart in speech bubble and make panda swipe when clicked
       return {
         ...prev,
-        action: clickActions[nextIndex],
+        action: "swipe",
         lastAction: prev.action,
         actionDuration: 0,
+        showHeart: true,
       }
     })
   }
 
+  // Handle ball button click
+  const handleBallClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setPet((prev) => ({
+      ...prev,
+      action: "withBall",
+      lastAction: prev.action,
+      actionDuration: 0,
+    }))
+  }
+
   return (
     <div className={cn("w-full border-t border-zinc-800", className)}>
-      <div
-        className="flex items-center justify-between px-2 py-1 cursor-pointer bg-zinc-900"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <div className="flex items-center justify-between px-2 py-1 bg-zinc-900">
         <div className="flex items-center gap-1">
-          <ChevronDown className={cn("w-4 h-4 transition-transform", !isOpen && "-rotate-90")} />
           <span className="text-xs font-medium">VS CODE PETS</span>
         </div>
         <div className="flex items-center gap-1">
           <button className="p-1 hover:bg-zinc-800 rounded">
             <Plus className="w-3 h-3" />
           </button>
-          <button className="p-1 hover:bg-zinc-800 rounded">
+          <button className="p-1 hover:bg-zinc-800 rounded" onClick={handleBallClick}>
             <Circle className="w-3 h-3" />
           </button>
           <button className="p-1 hover:bg-zinc-800 rounded">
@@ -178,30 +183,63 @@ export function Pet({ className }: { className?: string }) {
         </div>
       </div>
 
-      {isOpen && (
-        <div ref={containerRef} className="relative h-40 bg-zinc-900/50 overflow-hidden">
-          <div
-            className="absolute cursor-pointer transition-all duration-300"
-            style={{
-              left: `${pet.x}px`,
-              bottom: `${pet.y}px`,
-              transform: `scaleX(${pet.direction === "left" ? -1 : 1})`,
-            }}
-            onClick={handlePetClick}
-          >
-            <div className="w-10 h-10 relative">
-              <Image
-                src={pandaAnimations[pet.action] || "/placeholder.svg"}
-                alt="Panda Pet"
-                width={40}
-                height={40}
-                className="image-rendering-pixelated"
-              />
-            </div>
+      <div ref={containerRef} className="relative h-40 bg-zinc-900/50 overflow-hidden">
+        <div
+          className="absolute cursor-pointer transition-all duration-1000"
+          style={{
+            left: `${pet.x}px`,
+            bottom: `${pet.y}px`,
+            transform: `scaleX(${pet.direction === "left" ? -1 : 1})`,
+          }}
+          onClick={handlePetClick}
+        >
+          {/* Speech bubble */}
+          {pet.showHeart && <SpeechBubble>❤️</SpeechBubble>}
+
+          {/* Panda */}
+          <div className="w-10 h-10 relative">
+            <Image
+              src={pandaAnimations[pet.action] || "/placeholder.svg"}
+              alt="Panda Pet"
+              width={40}
+              height={40}
+              className="image-rendering-pixelated"
+            />
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }
 
+interface SpeechBubbleProps {
+  children: React.ReactNode
+  className?: string
+  position?: "top" | "bottom" | "left" | "right"
+}
+
+export function SpeechBubble({ children, className, position = "top" }: SpeechBubbleProps) {
+  return (
+    <div
+      className={cn(
+        "absolute bg-white text-black rounded-lg px-3 py-2 text-sm animate-bounce",
+        position === "top" && "-top-12 left-1/2 -translate-x-1/2",
+        position === "bottom" && "-bottom-12 left-1/2 -translate-x-1/2",
+        position === "left" && "top-1/2 -left-12 -translate-y-1/2",
+        position === "right" && "top-1/2 -right-12 -translate-y-1/2",
+        className,
+      )}
+    >
+      {children}
+      <div
+        className={cn(
+          "absolute w-3 h-3 bg-white transform rotate-45",
+          position === "top" && "bottom-[-6px] left-1/2 -translate-x-1/2",
+          position === "bottom" && "top-[-6px] left-1/2 -translate-x-1/2",
+          position === "left" && "right-[-6px] top-1/2 -translate-y-1/2",
+          position === "right" && "left-[-6px] top-1/2 -translate-y-1/2",
+        )}
+      />
+    </div>
+  )
+}        
