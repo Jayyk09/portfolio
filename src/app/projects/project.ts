@@ -8,16 +8,25 @@ export const projects = [
   },
   {
     title: "MedMonitor",
-    description: "LumeAI is a cutting-edge AI-powered chat application featuring advanced conversation capabilities.",
-    image: "/images/lumeai.png",
+    description: "Voice AI agent to collect patient data on call to give doctors a monitoring platform to extract relevant insights for medical recommendations.",
+    image: "/MedMonitor.gif",
     tags: ["AI Chat"],
     highlight: "Best AI at UGAHacks 2025"
   },
   {
     title: "BrokeNoMo",
-    description: "Productivity application combining pomodoro technique with task management and music integration.",
+    description: "AI tool using Knowledge Graphs to help users save money by analyzing their spending and providing recommendations based on books to help save money.",
     image: "/BrokeNoMo.gif",
-    tags: ["Productivity", "Electron"],
+    tags: [
+      "FastAPI",
+      "Knowledge Graphs",
+      "OpenAI Assistant",
+      "Python",
+      "React",
+      "Retell",
+      "ShadCN",
+      "Typescript"
+    ],
     highlight: "Won Best Accessibility at HackDavidson 2025"
   },
 ];

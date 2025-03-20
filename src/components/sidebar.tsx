@@ -26,20 +26,19 @@ const navigation = [
 ]
 
 const resources = [
-  { name: "Feed", href: "#feed", icon: LayoutGrid, number: "6" },
-  { name: "Thoughts", href: "#thoughts", icon: BookOpen, number: "7" },
-  { name: "Stack", href: "#stack", icon: Settings, number: "8" },
+  { name: "Thoughts", href: "#thoughts", icon: BookOpen, number: "4" },
+  { name: "Today I Learned", href: "#til", icon: Settings, number: "5" },
 ]
 
-const extras = [
-  { name: "Guest Book", href: "#guestbook", icon: Users, shortcut: "G" },
-  { name: "Don't Click", href: "#dont-click", icon: AlertTriangle, shortcut: "D" },
-]
+// const extras = [
+//   { name: "Guest Book", href: "#guestbook", icon: Users, shortcut: "G" },
+//   { name: "Don't Click", href: "#dont-click", icon: AlertTriangle, shortcut: "D" },
+// ]
 
-const connect = [
-  { name: "Contact", href: "#contact", icon: Contact, shortcut: "C" },
-  { name: "Twitter", href: "https://twitter.com", icon: Twitter, external: true },
-]
+// const connect = [
+//   { name: "Contact", href: "#contact", icon: Contact, shortcut: "C" },
+//   { name: "Twitter", href: "https://twitter.com", icon: Twitter, external: true },
+// ]
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -100,7 +99,7 @@ export function Sidebar() {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="px-2 text-xs font-semibold text-zinc-500 uppercase">Extras</h3>
             <div className="mt-2 space-y-1">
               {extras.map((item) => (
@@ -115,9 +114,9 @@ export function Sidebar() {
                 </Link>
               ))}
             </div>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <h3 className="px-2 text-xs font-semibold text-zinc-500 uppercase">Connect</h3>
             <div className="mt-2 space-y-1">
               {connect.map((item) => (
@@ -133,7 +132,7 @@ export function Sidebar() {
                 </Link>
               ))}
             </div>
-          </div>
+          </div> */}
         </nav>
 
         <div className="relative mt-4">
